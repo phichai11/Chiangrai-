@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เชียงราย — ค้นพบทุกมุมของเหนือสุดแดนสยาม</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;600;700;900&family=Noto+Sans+Thai:wght@300;400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f5f0e8;
+  --warm: #ede5d4;
+  --brown: #2c1810;
+  --brown2: #4a2c1a;
+  --gold: #c9963a;
+  --gold2: #e8b84b;
+  --green: #3d5a3e;
+  --green2: #5a7a3a;
+  --red: #8b2020;
+  --muted: #7a6a5a;
+  --border: #d4c4a8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--brown);
+  font-family: 'Noto Sans Thai', sans-serif;
+  overflow-x: hidden;
+}
+
+/* texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--brown);
+  letter-spacing: 1px;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--brown); }
+.nav-btn {
+  padding: 8px 20px;
+  background: var(--gold);
+  color: white;
+  border: none;
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.nav-btn:hover { background: var(--brown); }
+/* HERO */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 60px 80px;
+  overflow: hidden;
+  background: var(--brown);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(44,24,16,0.3) 0%, rgba(44,24,16,0.7) 100%),
+    linear-gradient(135deg, #3d5a3e 0%, #2c3e1a 30%, #1a2a1a 60%, #2c1810 100%);
+}
+/* mountain silhouette */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 45%;
+  background: var(--brown);
+  clip-path: polygon(0 60%, 8% 30%, 15% 50%, 22% 20%, 30% 45%, 38% 15%, 45% 40%, 52% 25%, 60% 50%, 68% 30%, 75% 55%, 83% 25%, 90% 45%, 96% 35%, 100% 50%, 100% 100%, 0 100%);
+}
+.hero-badge {
+  position: absolute;
+  top: 100px; right: 60px;
+  width: 120px; height: 120px;
+  border: 1px solid rgba(201,150,58,0.5);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--gold2);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  animation: spin 20s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.hero-badge-inner {
+  animation: spin 20s linear infinite reverse;
+  font-size: 1.5rem;
+}
+.hero-content { position: relative; z-index: 2; max-width: 700px; }
+.hero-tag {
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  color: var(--gold2);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-tag::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+.hero h1 {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.hero h1 span { color: var(--gold2); }
+.hero-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+.hero-stats {
+  display: flex;
+  gap: 40px;
+}
+.hero-stat { color: white; }
+.hero-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--gold2);
+  display: block;
+  line-height: 1;
+}
+.hero-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+/* SEARCH BAR */
+.search-wrap {
+  background: var(--warm);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 40px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  position: sticky;
+  top: 64px;
+  z-index: 400;
+}
+.search-input {
+  flex: 1;
+  padding: 12px 20px;
+  border: 1px solid var(--border);
+  background: white;
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 0.9rem;
+  color: var(--brown);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--gold); }
+.filter-btn {
+  padding: 12px 20px;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--muted);
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.filter-btn.active, .filter-btn:hover {
+  background: var(--gold);
+  color: white;
+  border-color: var(--gold);
+}
+.search-go {
+  padding: 12px 28px;
+  background: var(--brown);
+  color: white;
+  border: none;
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.search-go:hover { background: var(--gold); }
+
+/* CATEGORIES */
+.categories {
+  padding: 60px 40px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-header { margin-bottom: 36px; }
+.section-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.section-title {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--brown);
+}
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+.cat-item {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.cat-item::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+.cat-item:hover::before, .cat-item.active::before { transform: scaleX(1); }
+.cat-item:hover, .cat-item.active {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(44,24,16,0.08);
+}
+.cat-icon { font-size: 1.8rem; margin-bottom: 8px; display: block; }
+.cat-name { font-size: 0.78rem; color: var(--brown); font-weight: 500; }
+.cat-count { font-size: 0.68rem; color: var(--muted); margin-top: 4px; }
+
+/* FEATURED */
+.featured {
+  padding: 20px 40px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.place-card {
+  background: white;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+}
+.place-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(44,24,16,0.12);
+}
+.place-card:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.place-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+.place-card:first-child .place-img { aspect-ratio: 16/9; }
+/* placeholder gradient images */
+.place-img-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  transition: transform 0.4s;
+}
+.place-card:hover .place-img-bg { transform: scale(1.05); }
+.place-tag {
+  position: absolute;
+  top: 12px; left: 12px;
+  padding: 4px 10px;
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+.tag-temple { background: var(--red); color: white; }
+.tag-nature { background: var(--green); color: white; }
+.tag-culture { background: var(--gold); color: white; }
+.tag-food { background: var(--brown2); color: white; }
+.tag-cafe { background: #6b4226; color: white; }
+.tag-hotel { background: #1a3a5c; color: white; }
+
+.place-body { padding: 16px 20px 20px; }
+.place-name {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.place-card:first-child .place-name { font-size: 1.3rem; }
+.place-location {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.place-desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.place-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.place-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+.place-rating span { color: var(--muted); font-weight: 400; }
+.place-more {
+  font-size: 0.75rem;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.place-more:hover { border-color: var(--gold); }
+
+/* BANNER */
+.affiliate-banner {
+  margin: 0 40px 60px;
+  background: var(--brown);
+  padding: 40px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  position: relative;
+  overflow: hidden;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.affiliate-banner::before {
+  content: '✈';
+  position: absolute;
+  right: 200px;
+  font-size: 8rem;
+  opacity: 0.05;
+  color: white;
+}
+.banner-text h3 {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 8px;
+}
+.banner-text p { color: rgba(255,255,255,0.6); font-size: 0.88rem; }
+.banner-btns { display: flex; gap: 12px; flex-shrink: 0; }
+.banner-btn {
+  padding: 12px 24px;
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.banner-btn-primary { background: var(--gold); color: white; border: none; }
+.banner-btn-primary:hover { background: var(--gold2); }
+.banner-btn-secondary { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
+.banner-btn-secondary:hover { border-color: white; }
+
+/* MORE PLACES */
+.more-places {
+  padding: 0 40px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.list-card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.list-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 16px rgba(44,24,16,0.06);
+}
+.list-icon {
+  width: 48px; height: 48px;
+  background: var(--warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.list-info h4 { font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; }
+.list-info p { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+.list-info .rating { font-size: 0.72rem; color: var(--gold); margin-top: 6px; }
+
+/* REVIEW SECTION */
+.review-section {
+  background: var(--warm);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 60px 40px;
+}
+.review-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.review-form-title {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+.review-form-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 28px; }
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 0.8rem; color: var(--brown); margin-bottom: 6px; display: block; font-weight: 500; }
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  background: white;
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 0.85rem;
+  color: var(--brown);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+.form-textarea { height: 100px; resize: vertical; }
+.star-rating { display: flex; gap: 6px; font-size: 1.4rem; cursor: pointer; margin-bottom: 16px; }
+.star { color: var(--border); transition: color 0.1s; }
+.star.active, .star:hover { color: var(--gold); }
+.submit-btn {
+  padding: 12px 32px;
+  background: var(--gold);
+  color: white;
+  border: none;
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.submit-btn:hover { background: var(--brown); }
+
+.reviews-list { display: flex; flex-direction: column; gap: 16px; }
+.review-card {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 20px 24px;
+}
+.review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.reviewer-name { font-weight: 600; font-size: 0.88rem; }
+.reviewer-date { font-size: 0.72rem; color: var(--muted); }
+.review-place { font-size: 0.75rem; color: var(--gold); margin-bottom: 6px; }
+.review-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 8px; }
+.review-text { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+/* MAP SECTION */
+.map-section {
+  padding: 60px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.map-placeholder {
+  background: var(--warm);
+  border: 1px solid var(--border);
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--muted);
+}
+.map-placeholder .map-icon { font-size: 3rem; }
+.map-placeholder p { font-size: 0.88rem; }
+.map-placeholder small { font-size: 0.75rem; opacity: 0.6; }
+
+/* FOOTER */
+footer {
+  background: var(--brown);
+  color: rgba(255,255,255,0.7);
+  padding: 60px 40px 30px;
+}
+.footer-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 12px;
+}
+.footer-brand span { color: var(--gold2); }
+.footer-desc { font-size: 0.82rem; line-height: 1.7; }
+.footer-col h4 { color: white; font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 1px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-col a { color: rgba(255,255,255,0.5); font-size: 0.8rem; text-decoration: none; transition: color 0.2s; }
+.footer-col a:hover { color: var(--gold2); }
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+}
+
+/* ANIMATIONS */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44,24,16,0.7);
+  z-index: 900;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: white;
+  max-width: 500px;
+  width: 100%;
+  padding: 40px;
+  position: relative;
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--muted);
+}
+.modal h3 { font-family: 'Noto Serif Thai', serif; font-size: 1.3rem; margin-bottom: 8px; }
+.modal p { color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; }
+
+@media (max-width: 900px) {
+  .cat-grid { grid-template-columns: repeat(3, 1fr); }
+  .places-grid { grid-template-columns: 1fr; }
+  .place-card:first-child { grid-column: span 1; grid-row: span 1; }
+  .list-grid { grid-template-columns: repeat(2, 1fr); }
+  .review-inner { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  nav { padding: 0 20px; }
+  .hero { padding: 0 24px 60px; }
+  .hero-badge { display: none; }
+  .search-wrap { padding: 16px 20px; flex-wrap: wrap; }
+  .categories, .featured, .more-places, .map-section { padding-left: 20px; padding-right: 20px; }
+  .affiliate-banner { padding: 30px; flex-direction: column; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">เชียง<span>ราย</span></div>
+  <ul class="nav-links">
+    <li><a href="#">ที่เที่ยว</a></li>
+    <li><a href="#">ร้านอาหาร</a></li>
+    <li><a href="#">คาเฟ่</a></li>
+    <li><a href="#">ที่พัก</a></li>
+    <li><a href="#">กิจกรรม</a></li>
+  </ul>
+  <button class="nav-btn" onclick="document.getElementById('modal').classList.add('open')">+ รีวิวสถานที่</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge">
+    <div class="hero-badge-inner">🌿</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">เหนือสุดแดนสยาม</div>
+    <h1>เชียง<span>ราย</span></h1>
+    <p class="hero-sub">ค้นพบทุกมุมของจังหวัดที่สวยที่สุดในภาคเหนือ</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">240+</span>
+        <div class="hero-stat-label">สถานที่ท่องเที่ยว</div>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">180+</span>
+        <div class="hero-stat-label">ร้านอาหาร & คาเฟ่</div>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">4.8★</span>
+        <div class="hero-stat-label">คะแนนเฉลี่ย</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- SEARCH -->
+<div class="search-wrap">
+  <input class="search-input" type="text" placeholder="🔍  ค้นหาสถานที่ ร้านอาหาร คาเฟ่...">
+  <button class="filter-btn active" onclick="setFilter(this)">ทั้งหมด</button>
+  <button class="filter-btn" onclick="setFilter(this)">ใกล้ฉัน</button>
+  <button class="filter-btn" onclick="setFilter(this)">เปิดอยู่</button>
+  <button class="filter-btn" onclick="setFilter(this)">ฟรี</button>
+  <button class="search-go">ค้นหา</button>
+</div>
+
+<!-- CATEGORIES -->
+<div class="categories">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">หมวดหมู่</div>
+    <h2 class="section-title">อยากไปไหน?</h2>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-item active fade-up" onclick="selectCat(this)">
+      <span class="cat-icon">⛩️</span>
+      <div class="cat-name">วัด & ศาสนสถาน</div>
+      <div class="cat-count">48 แห่ง</div>
+    </div>
+    <div class="cat-item fade-up" onclick="selectCat(this)">
+      <span class="cat-icon">🏔️</span>
+      <div class="cat-name">ธรรมชาติ & ดอย</div>
+      <div class="cat-count">62 แห่ง</div>
+    </div>
+    <div class="cat-item fade-up" onclick="selectCat(this)">
+      <span class="cat-icon">☕</span>
+      <div class="cat-name">คาเฟ่</div>
+      <div class="cat-count">94 ร้าน</div>
+    </div>
+    <div class="cat-item fade-up" onclick="selectCat(this)">
+      <span class="cat-icon">🍜</span>
+      <div class="cat-name">ร้านอาหาร</div>
+      <div class="cat-count">120 ร้าน</div>
+    </div>
+    <div class="cat-item fade-up" onclick="selectCat(this)">
+      <span class="cat-icon">🏨</span>
+      <div class="cat-name">ที่พัก</div>
+      <div class="cat-count">75 แห่ง</div>
+    </div>
+    <div class="cat-item fade-up" onclick="selectCat(this)">
+      <span class="cat-icon">🛍️</span>
+      <div class="cat-name">ตลาด & ของฝาก</div>
+      <div class="cat-count">35 แห่ง</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURED PLACES -->
+<div class="featured">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">แนะนำ</div>
+    <h2 class="section-title">ไม่ควรพลาด</h2>
+  </div>
+  <div class="places-grid">
+
+    <div class="place-card fade-up">
+      <div class="place-img">
+        <div class="place-img-bg" style="background: linear-gradient(135deg,#c9963a,#8b2020); height:300px">🛕</div>
+        <div class="place-tag tag-temple">วัด</div>
+      </div>
+      <div class="place-body">
+        <h3 class="place-name">วัดร่องขุ่น (วัดขาว)</h3>
+        <div class="place-location">📍 อ.เมือง เชียงราย</div>
+        <p class="place-desc">วัดที่สวยที่สุดในเชียงราย ออกแบบโดยอาจารย์เฉลิมชัย โดยใช้สีขาวและกระจกสะท้อนแสงสร้างความงดงามอันเป็นเอกลักษณ์ เปิดทุกวัน 08.00-17.30 น.</p>
+        <div class="place-footer">
+          <div class="place-rating">★ 4.9 <span>(2,847 รีวิว)</span></div>
+          <a href="#" class="place-more">ดูรายละเอียด →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="place-card fade-up">
+      <div class="place-img">
+        <div class="place-img-bg" style="background: linear-gradient(135deg,#1a5c3e,#2c4a1a); height:200px">🔵</div>
+        <div class="place-tag tag-temple">วัด</div>
+      </div>
+      <div class="place-body">
+        <h3 class="place-name">วัดร่องเสือเต้น (วัดฟ้า)</h3>
+        <div class="place-location">📍 อ.เมือง เชียงราย</div>
+        <div class="place-footer">
+          <div class="place-rating">★ 4.7 <span>(1,203 รีวิว)</span></div>
+          <a href="#" class="place-more">ดูเพิ่ม →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="place-card fade-up">
+      <div class="place-img">
+        <div class="place-img-bg" style="background: linear-gradient(135deg,#3d5a3e,#1a3a1a); height:200px">🏔️</div>
+        <div class="place-tag tag-nature">ธรรมชาติ</div>
+      </div>
+      <div class="place-body">
+        <h3 class="place-name">ดอยแม่สลอง</h3>
+        <div class="place-location">📍 อ.แม่ฟ้าหลวง เชียงราย</div>
+        <div class="place-footer">
+          <div class="place-rating">★ 4.8 <span>(986 รีวิว)</span></div>
+          <a href="#" class="place-more">ดูเพิ่ม →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- AFFILIATE BANNER -->
+<div class="affiliate-banner fade-up">
+  <div class="banner-text">
+    <h3>จองที่พักเชียงรายราคาดีที่สุด</h3>
+    <p>เปรียบเทียบราคาจาก Booking.com, Agoda, Airbnb ในที่เดียว ประหยัดได้สูงสุด 40%</p>
+  </div>
+  <div class="banner-btns">
+    <button class="banner-btn banner-btn-primary">เปรียบเทียบราคา</button>
+    <button class="banner-btn banner-btn-secondary">ดูโปรโมชั่น</button>
+  </div>
+</div>
+
+<!-- MORE PLACES -->
+<div class="more-places">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">สถานที่ยอดนิยม</div>
+    <h2 class="section-title">ทั้งหมด</h2>
+  </div>
+  <div class="list-grid">
+    <div class="list-card fade-up">
+      <div class="list-icon">🏛️</div>
+      <div class="list-info">
+        <h4>พิพิธภัณฑ์บ้านดำ</h4>
+        <p>คอลเลกชันงานศิลปะของอาจารย์ถวัลย์</p>
+        <div class="rating">★ 4.6 · อ.เมือง</div>
+      </div>
+    </div>
+    <div class="list-card fade-up">
+      <div class="list-icon">🌸</div>
+      <div class="list-info">
+        <h4>สวนดอกไม้ไสยศาสตร์</h4>
+        <p>ทุ่งดอกไม้สวยงามตามฤดูกาล</p>
+        <div class="rating">★ 4.5 · อ.เชียงแสน</div>
+      </div>
+    </div>
+    <div class="list-card fade-up">
+      <div class="list-icon">🌊</div>
+      <div class="list-info">
+        <h4>สามเหลี่ยมทองคำ</h4>
+        <p>จุดบรรจบของ 3 ประเทศ ไทย ลาว พม่า</p>
+        <div class="rating">★ 4.4 · อ.เชียงแสน</div>
+      </div>
+    </div>
+    <div class="list-card fade-up">
+      <div class="list-icon">☕</div>
+      <div class="list-info">
+        <h4>ไร่ชาชิงไห่</h4>
+        <p>ชาอู่หลงที่ดีที่สุดของเชียงราย</p>
+        <div class="rating">★ 4.7 · อ.แม่สรวย</div>
+      </div>
+    </div>
+    <div class="list-card fade-up">
+      <div class="list-icon">🎪</div>
+      <div class="list-info">
+        <h4>ตลาดไนท์บาซาร์</h4>
+        <p>ตลาดกลางคืนที่ใหญ่ที่สุดในเชียงราย</p>
+        <div class="rating">★ 4.3 · อ.เมือง</div>
+      </div>
+    </div>
+    <div class="list-card fade-up">
+      <div class="list-icon">🏔️</div>
+      <div class="list-info">
+        <h4>ดอยตุง</h4>
+        <p>สวนดอกไม้และพระตำหนักดอยตุง</p>
+        <div class="rating">★ 4.8 · อ.แม่ฟ้าหลวง</div>
+      </div>
+    </div>
+    <div class="list-card fade-up">
+      <div class="list-icon">🎨</div>
+      <div class="list-info">
+        <h4>หมู่บ้านชาวเขา</h4>
+        <p>วัฒนธรรมและวิถีชีวิตชาวเขา</p>
+        <div class="rating">★ 4.5 · อ.เวียงป่าเป้า</div>
+      </div>
+    </div>
+    <div class="list-card fade-up">
+      <div class="list-icon">🚣</div>
+      <div class="list-info">
+        <h4>ล่องแพแม่น้ำโขง</h4>
+        <p>กิจกรรมล่องแพชมทิวทัศน์ริมโขง</p>
+        <div class="rating">★ 4.6 · อ.เชียงแสน</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEW SECTION -->
+<div class="review-section">
+  <div class="review-inner">
+    <div>
+      <div class="section-eyebrow">ร่วมแชร์</div>
+      <h2 class="review-form-title">รีวิวสถานที่ที่คุณไปมา</h2>
+      <p class="review-form-sub">ช่วยกันแชร์ประสบการณ์เพื่อนักท่องเที่ยวคนอื่น</p>
+      <div class="form-group">
+        <label class="form-label">ชื่อสถานที่</label>
+        <input class="form-input" type="text" placeholder="เช่น วัดร่องขุ่น, ร้านกาแฟ...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">หมวดหมู่</label>
+        <select class="form-select">
+          <option>วัด & ศาสนสถาน</option>
+          <option>ธรรมชาติ & ดอย</option>
+          <option>คาเฟ่</option>
+          <option>ร้านอาหาร</option>
+          <option>ที่พัก</option>
+          <option>ตลาด & ของฝาก</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ให้คะแนน</label>
+        <div class="star-rating" id="stars">
+          <span class="star" onclick="setStars(1)">★</span>
+          <span class="star" onclick="setStars(2)">★</span>
+          <span class="star" onclick="setStars(3)">★</span>
+          <span class="star" onclick="setStars(4)">★</span>
+          <span class="star" onclick="setStars(5)">★</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">รีวิวของคุณ</label>
+        <textarea class="form-textarea" placeholder="บอกเล่าประสบการณ์ของคุณ..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitReview()">ส่งรีวิว →</button>
+    </div>
+    <div>
+      <div class="section-eyebrow">รีวิวล่าสุด</div>
+      <h2 class="review-form-title" style="margin-bottom:24px">เสียงจากนักท่องเที่ยว</h2>
+      <div class="reviews-list" id="reviewsList">
+        <div class="review-card">
+          <div class="review-header">
+            <span class="reviewer-name">สมชาย ท่องเที่ยว</span>
+            <span class="reviewer-date">2 วันที่แล้ว</span>
+          </div>
+          <div class="review-place">📍 วัดร่องขุ่น</div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">สวยมากครับ บรรยากาศดีมาก ควรไปช่วงเช้าจะได้ถ่ายรูปสวยและไม่แออัด แนะนำเลย!</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <span class="reviewer-name">มาลี สุขใจ</span>
+            <span class="reviewer-date">5 วันที่แล้ว</span>
+          </div>
+          <div class="review-place">📍 ดอยแม่สลอง</div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">อากาศเย็นสบายมาก ชาอร่อย วิวสวยมาก ขับรถขึ้นดอยสนุกดี แต่ถนนค่อนข้างคดเคี้ยว ระวังด้วยนะคะ</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <span class="reviewer-name">ธนา วิถีชีวิต</span>
+            <span class="reviewer-date">1 สัปดาห์ที่แล้ว</span>
+          </div>
+          <div class="review-place">📍 สามเหลี่ยมทองคำ</div>
+          <div class="review-stars">★★★★☆</div>
+          <p class="review-text">เป็นจุดที่น่าสนใจมาก ได้เห็นสามประเทศในที่เดียว บรรยากาศริมแม่น้ำโขงสวยมาก</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAP -->
+<div class="map-section fade-up">
+  <div class="section-header">
+    <div class="section-eyebrow">แผนที่</div>
+    <h2 class="section-title">ค้นหาตามพื้นที่</h2>
+  </div>
+  <div class="map-placeholder">
+    <div class="map-icon">🗺️</div>
+    <p>แผนที่แสดงสถานที่ทั้งหมดในเชียงราย</p>
+    <small>* ในเวอร์ชันจริงจะเชื่อมต่อ Google Maps API</small>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">เชียง<span>ราย</span></div>
+      <p class="footer-desc">รวมข้อมูลท่องเที่ยว ร้านอาหาร คาเฟ่ และที่พักในเชียงรายครบที่สุด อัปเดตโดยนักท่องเที่ยวจริง</p>
+    </div>
+    <div class="footer-col">
+      <h4>หมวดหมู่</h4>
+      <ul>
+        <li><a href="#">วัด & ศาสนสถาน</a></li>
+        <li><a href="#">ธรรมชาติ</a></li>
+        <li><a href="#">คาเฟ่</a></li>
+        <li><a href="#">ร้านอาหาร</a></li>
+        <li><a href="#">ที่พัก</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>อำเภอ</h4>
+      <ul>
+        <li><a href="#">อ.เมือง</a></li>
+        <li><a href="#">อ.เชียงแสน</a></li>
+        <li><a href="#">อ.แม่ฟ้าหลวง</a></li>
+        <li><a href="#">อ.แม่สาย</a></li>
+        <li><a href="#">อ.เวียงชัย</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>เกี่ยวกับ</h4>
+      <ul>
+        <li><a href="#">เกี่ยวกับเรา</a></li>
+        <li><a href="#">ลงประกาศ</a></li>
+        <li><a href="#">ติดต่อเรา</a></li>
+        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 เชียงราย Directory. สงวนลิขสิทธิ์</span>
+    <span>ข้อมูลจากนักท่องเที่ยวจริง ไม่ใช่โฆษณา</span>
+  </div>
+</footer>
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
+    <h3>เพิ่มสถานที่ใหม่</h3>
+    <p>แชร์สถานที่ที่คุณค้นพบให้กับนักท่องเที่ยวคนอื่น</p>
+    <div class="form-group">
+      <label class="form-label">ชื่อสถานที่</label>
+      <input class="form-input" type="text" placeholder="ชื่อสถานที่...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">ที่อยู่ / อำเภอ</label>
+      <input class="form-input" type="text" placeholder="เช่น อ.เมือง เชียงราย">
+    </div>
+    <div class="form-group">
+      <label class="form-label">รายละเอียด</label>
+      <textarea class="form-textarea" placeholder="บอกเล่าเกี่ยวกับสถานที่นี้..."></textarea>
+    </div>
+    <button class="submit-btn" style="width:100%" onclick="document.getElementById('modal').classList.remove('open')">ส่งข้อมูล →</button>
+  </div>
+</div>
+
+<script>
+// Scroll animations
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Category select
+function selectCat(el) {
+  document.querySelectorAll('.cat-item').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Filter buttons
+function setFilter(el) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Star rating
+let selectedStars = 0;
+function setStars(n) {
+  selectedStars = n;
+  document.querySelectorAll('.star').forEach((s, i) => {
+    s.classList.toggle('active', i < n);
+  });
+}
+
+// Submit review
+function submitReview() {
+  const name = prompt('ชื่อของคุณ?') || 'นักท่องเที่ยว';
+  const place = document.querySelector('.form-input').value || 'สถานที่ไม่ระบุ';
+  const text = document.querySelector('.form-textarea').value;
+  if (!text) { alert('กรุณากรอกรีวิวก่อนนะครับ'); return; }
+  const stars = '★'.repeat(selectedStars || 5) + '☆'.repeat(5 - (selectedStars || 5));
+  const card = document.createElement('div');
+  card.className = 'review-card';
+  card.innerHTML = `
+    <div class="review-header"><span class="reviewer-name">${name}</span><span class="reviewer-date">เพิ่งรีวิว</span></div>
+    <div class="review-place">📍 ${place}</div>
+    <div class="review-stars">${stars}</div>
+    <p class="review-text">${text}</p>`;
+  document.getElementById('reviewsList').prepend(card);
+  document.querySelector('.form-textarea').value = '';
+  document.querySelector('.form-input').value = '';
+  alert('ขอบคุณสำหรับรีวิวครับ! 🙏');
+}
+
+// Modal
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('open');
+  }
+}
+</script>
+</body>
+</html>
